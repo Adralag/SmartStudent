@@ -85,35 +85,6 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.post('/login', (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).json({ message: "Email and password are required" });
-    }
-
-    const query = "SELECT * FROM users WHERE email = ?";
-    db.query(query, [email], async (err, results) => {
-        if (err) {
-            console.error("Error querying database:", err);
-            return res.status(500).json({ message: "Server error" });
-        }
-
-        if (results.length === 0) {
-            return res.status(401).json({ message: "Invalid email or password" });
-        }
-
-        const user = results[0];
-        const isMatch = await bcrypt.compare(password, user.password_hash);
-
-        if (!isMatch) {
-            return res.status(401).json({ message: "Invalid email or password" });
-        }
-
-        res.status(200).json({ message: "Login successful", user });
-    });
-});
-
 app.post('/register', async (req, res) => {
     const { fullName, email, studentID, course, password } = req.body;
 
