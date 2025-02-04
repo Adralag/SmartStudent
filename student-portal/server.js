@@ -37,21 +37,27 @@ db.query('USE smartstudent', (err) => {
 });
 
 // **Handle Registration Form Submission**
-app.post("/submit-signup", (req, res) => {
+app.post("/submit-signup", async (req, res) => {
     const { fullName, email, studentID, course, password } = req.body;
 
     if (!fullName || !email || !studentID || !course || !password) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
-    const query = "INSERT INTO users (name, email, student_ID, course_of_study, password_hash) VALUES (?, ?, ?, ?, ?)";
-    db.query(query, [fullName, email, studentID, course, password], (err, result) => {
-        if (err) {
-            console.error("Error inserting data:", err);
-            return res.status(500).json({ message: "Server error" });
-        }
-        res.status(201).json({ message: "Registration successful" });
-    });
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const query = "INSERT INTO users (name, email, student_ID, course_of_study, password_hash) VALUES (?, ?, ?, ?, ?)";
+        db.query(query, [fullName, email, studentID, course, hashedPassword], (err, result) => {
+            if (err) {
+                console.error("Error inserting data:", err);
+                return res.status(500).json({ message: "Server error" });
+            }
+            res.status(201).json({ message: "Registration successful" });
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
 });
 
 // **Handle Login Request**
