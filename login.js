@@ -2,12 +2,14 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+    const passwordField = document.getElementById('login-password');
+    const hashedPassword = CryptoJS.SHA256(passwordField.value).toString();
+    passwordField.value = hashedPassword;
 
     const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password: hashedPassword })
     });
 
     const data = await response.json();
@@ -28,8 +30,4 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     } else {
         alert(data.error);
     }
-
-    const salt = await bcrypt.genSalt(10);
-const hashedPassword = await bcrypt.hash(password, salt);
-
 });
