@@ -62,8 +62,8 @@ app.post("/login", (req, res) => {
         return res.status(400).json({ message: "Email and password are required" });
     }
 
-    const query = "SELECT * FROM users WHERE email = ? AND password_hash = ?";
-    db.query(query, [email, password], async (err, results) => {
+    const query = "SELECT * FROM users WHERE email = ?";
+    db.query(query, [email], async (err, results) => {
         if (err) {
             console.error("Error querying database:", err);
             return res.status(500).json({ message: "Server error" });
@@ -74,15 +74,14 @@ app.post("/login", (req, res) => {
         }
 
         const user = results[0];
-        res.status(200).json({ user });
 
-            // Check password
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return res.status(401).json({ error: 'Invalid email or password' });
-            }
-        
-            res.json({ message: 'Login successful', user });
+        // Check password
+        const isMatch = await bcrypt.compare(password, user.password_hash);
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        res.json({ message: 'Login successful', user });
     });
 });
 
