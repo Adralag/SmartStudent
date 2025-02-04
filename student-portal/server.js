@@ -3,6 +3,7 @@ const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const port = 5000;
@@ -62,7 +63,7 @@ app.post("/login", (req, res) => {
     }
 
     const query = "SELECT * FROM users WHERE email = ? AND password_hash = ?";
-    db.query(query, [email, password], (err, results) => {
+    db.query(query, [email, password], async (err, results) => {
         if (err) {
             console.error("Error querying database:", err);
             return res.status(500).json({ message: "Server error" });
@@ -74,6 +75,14 @@ app.post("/login", (req, res) => {
 
         const user = results[0];
         res.status(200).json({ user });
+
+            // Check password
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(401).json({ error: 'Invalid email or password' });
+            }
+        
+            res.json({ message: 'Login successful', user });
     });
 });
 
