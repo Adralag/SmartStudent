@@ -34,7 +34,7 @@ app.post("/submit-signup", (req, res) => {
         return res.status(400).json({ message: "All fields are required" });
     }
 
-    const query = "INSERT INTO students (fullName, email, studentID, course, password) VALUES (?, ?, ?, ?, ?)";
+    const query = "INSERT INTO users (fullName, email, studentID, course, password) VALUES (?, ?, ?, ?, ?)";
     db.query(query, [fullName, email, studentID, course, password], (err, result) => {
         if (err) {
             console.error("Error inserting data:", err);
