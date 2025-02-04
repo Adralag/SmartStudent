@@ -53,6 +53,30 @@ app.post("/submit-signup", (req, res) => {
     });
 });
 
+// **Handle Login Request**
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    const query = "SELECT * FROM users WHERE email = ? AND password_hash = ?";
+    db.query(query, [email, password], (err, results) => {
+        if (err) {
+            console.error("Error querying database:", err);
+            return res.status(500).json({ message: "Server error" });
+        }
+
+        if (results.length === 0) {
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
+
+        const user = results[0];
+        res.status(200).json({ user });
+    });
+});
+
 // **Start the Server**
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
