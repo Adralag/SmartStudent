@@ -28,4 +28,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     } else {
         alert(data.error);
     }
+
+    const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(password, salt);
+
 });
