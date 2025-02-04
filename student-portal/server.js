@@ -27,6 +27,14 @@ db.connect((err) => {
     }
 });
 
+db.query('USE smartstudent', (err) => {
+    if (err) {
+        console.error('Error selecting database:', err);
+    } else {
+        console.log('Database selected successfully');
+    }
+});
+
 // **Handle Registration Form Submission**
 app.post("/submit-signup", (req, res) => {
     const { fullName, email, studentID, course, password } = req.body;
