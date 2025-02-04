@@ -68,6 +68,6 @@ document.getElementById("signupForm").addEventListener("submit", async function(
         console.error("Error during registration:", error);
         alert("An error occurred during registration. Please try again later.");
     }
-console.log("signup.js is connected successfully!");
-    console.log("signup.js is connected successfully!");
+console.log("register.js is connected successfully!");
+    console.log("register.js is connected successfully!");
 });

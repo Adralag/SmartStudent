@@ -29,26 +29,26 @@
                 <div class="col-md-6">
                     <div class="card p-4">
                         <h2 class="text-center">Create an Account</h2>
-                        <form action="/submit-signup" method="POST">
+                        <form action="connect.php" method="POST">
                             <div class="mb-3">
                                 <label for="fullName" class="form-label">Full Name</label>
-                                <input type="text" id="fullName" class="form-control" placeholder="Enter your full name" required>
+                                <input type="text" id="fullName" class="form-control" name="fullName" placeholder="Enter your full name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email Address</label>
-                                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                                <input type="email" id="email" class="form-control" name="email" placeholder="Enter your email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="studentID" class="form-label">Student ID</label>
-                                <input type="text" id="studentID" class="form-control" placeholder="Enter student ID" required>
+                                <input type="text" id="studentID" class="form-control" name="studentID" placeholder="Enter student ID" required>
                             </div>
                             <div class="mb-3">
                                 <label for="course" class="form-label">Course</label>
-                                <input type="text" id="course" class="form-control" placeholder="Enter course" required>
+                                <input type="text" id="course" class="form-control" name="course" placeholder="Enter course" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" id="password" class="form-control" placeholder="Create a password" required>
+                                <input type="password" id="password" class="form-control" name="password" placeholder="Create a password" required>
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="terms" required>
