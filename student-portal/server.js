@@ -9,6 +9,7 @@ const port = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // **Connect to MySQL Database**
 const db = mysql.createConnection({
@@ -34,7 +35,7 @@ app.post("/submit-signup", (req, res) => {
         return res.status(400).json({ message: "All fields are required" });
     }
 
-    const query = "INSERT INTO users (fullName, email, studentID, course, password) VALUES (?, ?, ?, ?, ?)";
+    const query = "INSERT INTO users (name, email, student_ID, course_of_study, password_hash) VALUES (?, ?, ?, ?, ?)";
     db.query(query, [fullName, email, studentID, course, password], (err, result) => {
         if (err) {
             console.error("Error inserting data:", err);
