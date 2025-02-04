@@ -1,5 +1,3 @@
-// ...existing code...
-
 // Database connection setup
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
@@ -18,8 +16,6 @@ db.connect((err) => {
     }
     console.log('Connected to the database');
 });
-
-// ...existing code...
 
 // Handle Login Request
 app.post("/login", (req, res) => {
