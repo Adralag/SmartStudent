@@ -1,12 +1,16 @@
-// Database connection setup
+require('dotenv').config();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
+const express = require('express');
+const app = express();
+
+app.use(express.json());
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'smartstudent'
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'smartstudent'
 });
 
 db.connect((err) => {
@@ -37,14 +41,13 @@ app.post('/login', (req, res) => {
         }
 
         const user = results[0];
-
-        // Check password
         const isMatch = await bcrypt.compare(password, user.password_hash);
+
         if (!isMatch) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+            return res.status(401).json({ message: "Invalid email or password" });
         }
 
-        res.json({ message: 'Login successful', user });
+        res.status(200).json({ message: "Login successful", user });
     });
 });
 
@@ -69,5 +72,10 @@ app.post('/register', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
