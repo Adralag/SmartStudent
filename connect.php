@@ -6,7 +6,11 @@
     $password = $_POST['password'];
 
     // Database connection
-    $conn = new mysqli('localhost','root','','smartstudent');
+    $conn = new mysqli( 'localhost',
+                        'root',
+                        '',
+                        'smartstudent');
+
     if ($conn->connect_error) {
         die('Conncetion Failed : '.$conn->connect_error);
     } else {
@@ -17,3 +21,4 @@
         $stm->close();
         $conn->close();
     }
+?>
