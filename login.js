@@ -1,3 +1,21 @@
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    hashPassword();
+    this.submit();
+});
+
+function hashPassword() {
+    const passwordField = document.getElementById('login-password');
+    const hashedPasswordField = document.getElementById('hashed-password');
+    const hashedPassword = CryptoJS.SHA256(passwordField.value).toString();
+    hashedPasswordField.value = hashedPassword;
+    passwordField.value = ''; // Clear the plain text password
+}
+
+document.getElementById('loginButton').addEventListener('click', function() {
+    document.getElementById('loginForm').submit();
+});
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 

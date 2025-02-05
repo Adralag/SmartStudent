@@ -6,7 +6,7 @@ const cors = require("cors");
 const bcrypt = require('bcryptjs');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -14,10 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // **Connect to MySQL Database**
 const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'smartstudent'
 });
 
 db.connect((err) => {
@@ -37,7 +37,7 @@ db.query('USE smartstudent', (err) => {
 });
 
 // **Handle Registration Form Submission**
-app.post("/submit-signup", async (req, res) => {
+app.post("/register", async (req, res) => {
     const { fullName, email, studentID, course, password } = req.body;
 
     if (!fullName || !email || !studentID || !course || !password) {
@@ -91,35 +91,6 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.post('/register', async (req, res) => {
-    const { fullName, email, studentID, course, password } = req.body;
-
-    if (!fullName || !email || !studentID || !course || !password) {
-        return res.status(400).json({ message: "All fields are required" });
-    }
-
-    try {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        const query = 'INSERT INTO users (name, email, student_ID, course_of_study, password_hash) VALUES (?, ?, ?, ?, ?)';
-        db.query(query, [fullName, email, studentID, course, hashedPassword], (err, result) => {
-            if (err) {
-                console.error("Error inserting data:", err);
-                return res.status(500).json({ message: "Server error" });
-            }
-            res.status(201).json({ message: 'User registered successfully' });
-        });
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
+app.listen(port, () => {
+    console.log(`Server is running on port http://localhost:${port}`);
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port http://localhost:${PORT}`);
-});
-
-// Remove the redundant app.listen call
-// app.listen(port, () => {
-//     console.log(`Server running on http://localhost:${port}`);
-// });

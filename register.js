@@ -18,4 +18,22 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(data.message);
         if (response.ok) window.location.href = "login.html";
     });
+
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        hashPassword();
+        this.submit();
+    });
+
+    function hashPassword() {
+        const passwordField = document.getElementById('password');
+        const hashedPasswordField = document.getElementById('hashed-password');
+        const hashedPassword = CryptoJS.SHA256(passwordField.value).toString();
+        hashedPasswordField.value = hashedPassword;
+        passwordField.value = ''; // Clear the plain text password
+    }
+
+    document.getElementById('registerButton').addEventListener('click', function() {
+        document.getElementById('registerForm').submit();
+    });
 });
