@@ -3,7 +3,14 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     const email = document.getElementById('login-email').value;
     const passwordField = document.getElementById('login-password');
-    const hashedPassword = CryptoJS.SHA256(passwordField.value).toString();
+    const password = passwordField.value;
+
+    if (!email || !password) {
+        alert('Email and password are required');
+        return;
+    }
+
+    const hashedPassword = CryptoJS.SHA256(password).toString();
     passwordField.value = ''; // Clear the plain text password
 
     const response = await fetch('http://localhost:3000/login', {
