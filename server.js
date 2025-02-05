@@ -64,8 +64,14 @@ app.post("/register", async (req, res) => {
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ error: "Email and password are required" });
+    console.log("Login request received:", { email, password }); // Add this line for debugging
+
+    if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+    }
+
+    if (!password) {
+        return res.status(400).json({ error: "Password is required" });
     }
 
     const query = "SELECT * FROM users WHERE email = ?";
