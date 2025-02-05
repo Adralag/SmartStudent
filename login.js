@@ -10,35 +10,40 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         return;
     }
 
-    const response = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }) // Send plain text password
-    });
+    // Hash the password using crypto-js
+    const hashedPassword = CryptoJS.SHA256(password).toString();
 
-    const data = await response.json();
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password: hashedPassword }) // Send hashed password
+        });
 
-    console.log('Response status:', response.status);
-    console.log('Response data:', data);
+        const data = await response.json();
+        console.log('Response status:', response.status);
+        console.log('Response data:', data);
 
-    if (response.ok) {
-        alert('Login successful!');
-        console.log(data);
-        // Redirect user or store token in localStorage/sessionStorage
+        if (response.ok) {
+            alert('Login successful!');
+            console.log(data);
+            // Redirect user or store token in localStorage/sessionStorage
 
-        // Update profile information
-        if (data.user) {
-            document.getElementById("profile-name").innerText = data.user.name;
-            document.getElementById("profile-email").innerText = data.user.email;
-            document.getElementById("profile-student-id").innerText = data.user.student_id;
-            document.getElementById("profile-course").innerText = data.user.course_of_study;
-            document.getElementById("profile-section").classList.remove("d-none");
+            // Update profile information
+                document.getElementById("profile-name").textContent = data.user.name;
+                document.getElementById("profile-email").textContent = data.user.email;
+                document.getElementById("profile-student-id").textContent = data.user.student_id;
+                document.getElementById("profile-course").textContent = data.user.course_of_study;
+                document.getElementById("profile-section").classList.remove("d-none");
+        } else {
+            alert('Login failed. Please check your email and password and try again.');
+            console.log('Server error:', data.error);
+            console.error('Server error:', data.error);
         }
-    } else {
-        alert(data.error);
+    } catch (error) {
+        console.error('Error during fetch:', error);
+        alert('An error occurred. Please try again later.');
     }
 });
 
-document.getElementById('loginButton').addEventListener('click', function() {
-    document.getElementById('loginForm').submit();
-});
+// Removed redundant event listener for login button

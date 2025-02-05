@@ -1,9 +1,11 @@
-require("dotenv").config();
-const express = require("express");
-const mysql = require("mysql");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const bcrypt = require('bcryptjs');
+import dotenv from 'dotenv';
+import express from 'express';
+import mysql from 'mysql';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import bcrypt from 'bcryptjs';
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,10 +52,10 @@ app.post("/register", async (req, res) => {
         const query = "INSERT INTO users (name, email, student_ID, course_of_study, password_hash) VALUES (?, ?, ?, ?, ?)";
         db.query(query, [fullName, email, studentID, course, hashedPassword], (err, result) => {
             if (err) {
-                console.error("Error inserting data:", err);
-                return res.status(500).json({ error: "Server error" });
+            console.error("Error inserting data:", err);
+            return res.status(500).json({ error: "Server error" });
             }
-            res.status(201).json({ message: "Registration successful" });
+            res.status(201).json({ message: "User registered successfully", userId: result.insertId });
         });
     } catch (error) {
         res.status(500).json({ error: "Server error" });
