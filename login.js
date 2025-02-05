@@ -7,6 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     if (!email || !password) {
         alert('Email and password are required');
+        console.log('Email or password is missing:', { email, password });
         return;
     }
 
