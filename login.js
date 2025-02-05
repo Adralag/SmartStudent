@@ -14,6 +14,9 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     const data = await response.json();
 
+    console.log('Response status:', response.status);
+    console.log('Response data:', data);
+
     if (response.ok) {
         alert('Login successful!');
         console.log(data);
