@@ -41,7 +41,7 @@ app.post("/register", async (req, res) => {
     const { fullName, email, studentID, course, password } = req.body;
 
     if (!fullName || !email || !studentID || !course || !password) {
-        return res.status(400).json({ message: "All fields are required" });
+        return res.status(400).json({ error: "All fields are required" });
     }
 
     try {
@@ -51,12 +51,12 @@ app.post("/register", async (req, res) => {
         db.query(query, [fullName, email, studentID, course, hashedPassword], (err, result) => {
             if (err) {
                 console.error("Error inserting data:", err);
-                return res.status(500).json({ message: "Server error" });
+                return res.status(500).json({ error: "Server error" });
             }
             res.status(201).json({ message: "Registration successful" });
         });
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ error: "Server error" });
     }
 });
 
@@ -65,18 +65,18 @@ app.post("/login", (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return res.status(400).json({ message: "Email and password are required" });
+        return res.status(400).json({ error: "Email and password are required" });
     }
 
     const query = "SELECT * FROM users WHERE email = ?";
     db.query(query, [email], async (err, results) => {
         if (err) {
             console.error("Error querying database:", err);
-            return res.status(500).json({ message: "Server error" });
+            return res.status(500).json({ error: "Server error" });
         }
 
         if (results.length === 0) {
-            return res.status(401).json({ message: "Invalid email or password" });
+            return res.status(401).json({ error: "Invalid email or password" });
         }
 
         const user = results[0];
