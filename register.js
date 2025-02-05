@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const course = document.getElementById("course").value;
         const password = document.getElementById("password").value;
 
-        const response = await fetch("http://localhost:5000/submit-signup", {
+        const response = await fetch("http://localhost:3000/submit-signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ fullName, email, studentID, course, password })
