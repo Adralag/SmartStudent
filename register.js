@@ -1,22 +1,19 @@
-// Include the CryptoJS library
-const script = document.createElement('script');
-document.head.appendChild(script);
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector("form").addEventListener("submit", async (event) => {
-        event.preventDefault();
+    // Include the CryptoJS library for hashing passwords
+    const script = document.createElement('script');
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js";
+    script.onload = () => {
+        document.querySelector("form").addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-        const fullname = document.getElementById('fullname').value;
-        const email = document.getElementById('email').value;
-        const ID = document.getElementById('ID').value;
-        const course = document.getElementById('course').value;
-        const passwordField = document.getElementById('password');
-        const hashedPasswordField = document.getElementById('hashed-password');
-        const hashedPassword = CryptoJS.SHA256(passwordField.value).toString();
-        hashedPasswordField.value = hashedPassword;
-        passwordField.value = ''; // Clear the plain text password
-
-            const response = await fetch("http://localhost:3000/register", {
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const ID = document.getElementById('ID').value;
+            const course = document.getElementById('course').value;
+            const passwordField = document.getElementById('password');
+            const hashedPassword = CryptoJS.SHA256(passwordField.value).toString();
+            const response = await fetch(`${BASE_URL}/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -27,12 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     password: hashedPassword
                 })
             });
-    
-            const data = await response.json();
-            alert(data.message);
+
             if (response.ok) {
+                alert(`Registration successful! Welcome, ${fullname}. Please check your email (${email}) for further instructions.`);
                 passwordField.value = ''; // Clear the plain text password
                 window.location.href = "login.html";
             }
         });
-    });
+    };
+    document.head.appendChild(script);
+});
+
+const BASE_URL = "http://localhost:3000";
