@@ -27,7 +27,7 @@ db.connect((err) => {
 // Register route
 app.post('/register', (req, res) => {
     const { fullName, email, studentID, course, password } = req.body;
-    const query = 'INSERT INTO users (fullName, email, studentID, course, password) VALUES (?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO users (name, email, student_id, course_of_study, password_hash) VALUES (?, ?, ?, ?, ?)';
     db.query(query, [fullName, email, studentID, course, password], (err, result) => {
         if (err) {
             console.error('Error inserting user:', err);
@@ -41,7 +41,7 @@ app.post('/register', (req, res) => {
 // Login route
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+    const query = 'SELECT * FROM users WHERE email = ? AND password_hash = ?';
     db.query(query, [email, password], (err, results) => {
         if (err) {
             console.error('Error querying user:', err);
