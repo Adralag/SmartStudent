@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const fullName = document.getElementById('fullname').value;
         const email = document.getElementById('email').value;
-        const studentID = document.getElementById('ID').value;
+        const ID = document.getElementById('ID').value;
         const course = document.getElementById('course').value;
         const passwordField = document.getElementById('password');
         const hashedPasswordField = document.getElementById('hashed-password');
