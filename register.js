@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("form").addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const fullName = document.getElementById('full-name').value;
+        const fullName = document.getElementById('fullname').value;
         const email = document.getElementById('email').value;
-        const studentID = document.getElementById('student-id').value;
+        const studentID = document.getElementById('ID').value;
         const course = document.getElementById('course').value;
         const passwordField = document.getElementById('password');
         const hashedPasswordField = document.getElementById('hashed-password');
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify({
                     fullName,
                     email,
-                    studentID,
+                    ID,
                     course,
                     password: hashedPassword
                 })
