@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("form").addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const fullName = document.getElementById('fullname').value;
+        const fullname = document.getElementById('fullname').value;
         const email = document.getElementById('email').value;
         const ID = document.getElementById('ID').value;
         const course = document.getElementById('course').value;
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    fullName,
+                    fullname,
                     email,
                     ID,
                     course,
