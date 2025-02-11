@@ -1,6 +1,5 @@
 // Include the CryptoJS library
 const script = document.createElement('script');
-script.src = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js';
 document.head.appendChild(script);
 
 document.addEventListener("DOMContentLoaded", () => {
