@@ -22,19 +22,19 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="card p-3">
-                        <h5></h5>
+                        <h5>Course: </h5>
                         <p>Latest Grade: <strong>%</strong></p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card p-3">
-                        <h5></h5>
+                        <h5>Course: </h5>
                         <p>Latest Grade: <strong>%</strong></p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card p-3">
-                        <h5></h5>
+                        <h5>Course: </h5>
                         <p>Latest Grade: <strong>%</strong></p>
                     </div>
                 </div>
@@ -43,19 +43,6 @@
         </div>
         <script>
             const ctx = document.getElementById('gradeChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                    datasets: [{
-                        label: 'Math', data: [80, 85, 87, 90], borderColor: 'blue', fill: false
-                    }, {
-                        label: 'Physics', data: [88, 90, 92, 95], borderColor: 'green', fill: false
-                    }, {
-                        label: 'Biology', data: [70, 75, 78, 80], borderColor: 'red', fill: false
-                    }]
-                }
-            });
         </script>
         <script src="grade-tracker.js"></script>
     </body>
