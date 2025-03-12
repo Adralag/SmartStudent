@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     // Include the CryptoJS library for hashing passwords
     const script = document.createElement('script');
@@ -32,5 +31,3 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     document.head.appendChild(script);
 });
-
-const BASE_URL = "http://localhost:3000";

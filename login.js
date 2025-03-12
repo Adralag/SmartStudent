@@ -45,5 +45,3 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         alert('An error occurred. Please try again later.');
     }
 });
-
-// Removed redundant event listener for login button
