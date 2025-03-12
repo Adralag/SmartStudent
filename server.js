@@ -26,9 +26,9 @@ db.connect((err) => {
 
 // Register route
 app.post('/register', (req, res) => {
-    const { fullName, email, ID, course, password } = req.body;
-    const query = 'INSERT INTO users (name, email, role, course_of_study, password_hash) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [fullName, email, ID, course, password], (err, result) => {
+    const { fullName, email, course, password } = req.body;
+    const query = 'INSERT INTO users (name, email, course_of_study, password_hash) VALUES (?, ?, ?, ?)';
+    db.query(query, [fullName, email, course, password], (err, result) => {
         if (err) {
             console.error('Error inserting user:', err);
             res.status(500).send({ error: 'Failed to register user' });

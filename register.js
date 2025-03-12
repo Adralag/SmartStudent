@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const fullname = document.getElementById('fullname').value;
             const email = document.getElementById('email').value;
-            const ID = document.getElementById('ID').value;
             const course = document.getElementById('course').value;
             const passwordField = document.getElementById('password');
             const hashedPassword = CryptoJS.SHA256(passwordField.value).toString();
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify({
                     fullname,
                     email,
-                    ID,
                     course,
                     password: hashedPassword
                 })
